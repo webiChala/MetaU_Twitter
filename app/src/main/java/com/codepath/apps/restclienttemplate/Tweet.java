@@ -20,6 +20,7 @@ public class Tweet {
     public String createdAt;
     public User user;
     public String mediaUrl;
+    public String id;
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
@@ -27,6 +28,7 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.createdAt = tweet.getRelativeTimeAgo(tweet.createdAt);
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.id = jsonObject.getString("id_str");
 
         if(jsonObject.has("full_text")) {
             tweet.body = jsonObject.getString("full_text");

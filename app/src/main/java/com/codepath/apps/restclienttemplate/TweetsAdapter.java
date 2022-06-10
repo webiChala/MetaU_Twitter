@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -43,7 +46,7 @@ public class TweetsAdapter  extends RecyclerView.Adapter<TweetsAdapter.ViewHolde
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView userPhoto;
         TextView userScreenName;
         TextView userTweet;
@@ -59,20 +62,41 @@ public class TweetsAdapter  extends RecyclerView.Adapter<TweetsAdapter.ViewHolde
             userPhoto = itemView.findViewById(R.id.userPhoto);
             mediaImage = itemView.findViewById(R.id.mediaImage);
             createdAt = itemView.findViewById(R.id.createdAt);
+            itemView.setOnClickListener(this);
             //timeline_icon = itemView.findViewById(R.id.timeline_icon);
         }
         public void bind(Tweet tweet) {
             userScreenName.setText(tweet.user.screenName);
             userTweet.setText(tweet.body);
+
+            createdAt.setText(tweet.createdAt);
             Glide.with(context).load(tweet.user.ProfileImageUrl).circleCrop().into(userPhoto);
 
             if (tweet.mediaUrl.equals("null")) {
                 mediaImage.setVisibility(View.GONE);
             } else{
                 Glide.with(context).load(tweet.mediaUrl).transform(new RoundedCorners(20)).into(mediaImage);
+                mediaImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, wholepictureActivity.class);
+                        intent.putExtra("mediaImage", tweet.mediaUrl);
+                        context.startActivity(intent);
+                    }
+                });
             }
-            createdAt.setText(tweet.createdAt);
+
             //Glide.with(context).load(tweet.user.ProfileImageUrl).circleCrop().into(timeline_icon);
+
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            Tweet tweet = tweets.get(this.getAdapterPosition());
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra("Tweet", Parcels.wrap(tweet));
+            context.startActivity(intent);
 
         }
     }

@@ -21,12 +21,13 @@ public class Tweet {
     public User user;
     public String mediaUrl;
     public String id;
+    public String notRelativeTime;
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
         //tweet.body = jsonObject.getString("text");
-        tweet.createdAt = jsonObject.getString("created_at");
-        tweet.createdAt = tweet.getRelativeTimeAgo(tweet.createdAt);
+        tweet.notRelativeTime = jsonObject.getString("created_at");
+        tweet.createdAt = tweet.getRelativeTimeAgo(tweet.notRelativeTime);
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id = jsonObject.getString("id_str");
 

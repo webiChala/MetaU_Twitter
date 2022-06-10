@@ -69,6 +69,25 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, "", handler);
 	}
 
+	public void favorite(String tweetId, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/create.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", tweetId);
+		//params.put("tweet_mode", "extended");
+
+		client.post(apiUrl, params, "", handler);
+	}
+	public void unfavorite(String tweetId, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/destroy.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("id", tweetId);
+		//params.put("tweet_mode", "extended");
+
+		client.post(apiUrl, params, "", handler);
+	}
+
 	public void getUserProfile(JsonHttpResponseHandler handler){
 
 		String apiUrl = getApiUrl("account/verify_credentials.json");

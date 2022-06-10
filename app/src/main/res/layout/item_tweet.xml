@@ -77,9 +77,31 @@
     <View
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mediaImage"
+        app:layout_constraintTop_toBottomOf="@id/ibFavorite"
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
         android:background="@color/white"/>
+
+
+    <ImageButton
+        android:id="@+id/ibFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/userTweet"
+        app:layout_constraintTop_toBottomOf="@id/mediaImage"
+        app:srcCompat="@android:drawable/btn_star_big_off" />
+
+    <TextView
+        android:id="@+id/favoriteCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="12"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#F8F5F5"
+        app:layout_constraintStart_toEndOf="@+id/ibFavorite"
+        app:layout_constraintTop_toTopOf="@+id/ibFavorite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

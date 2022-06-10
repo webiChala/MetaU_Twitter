@@ -22,14 +22,26 @@ public class Tweet {
     public String mediaUrl;
     public String id;
     public String notRelativeTime;
+    public boolean isfavorited;
+    public int favoriteCount;
+    public int retweetedCount;
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
+
+
+        if (jsonObject.has("retweeted_status")){
+            return null;
+        }
+
         Tweet tweet = new Tweet();
         //tweet.body = jsonObject.getString("text");
         tweet.notRelativeTime = jsonObject.getString("created_at");
         tweet.createdAt = tweet.getRelativeTimeAgo(tweet.notRelativeTime);
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id = jsonObject.getString("id_str");
+        tweet.favoriteCount = jsonObject.getInt("favorite_count");
+        tweet.isfavorited = jsonObject.getBoolean("favorited");
+        tweet.retweetedCount = jsonObject.getInt("retweet_count");
 
         if(jsonObject.has("full_text")) {
             tweet.body = jsonObject.getString("full_text");
@@ -56,8 +68,11 @@ public class Tweet {
         Log.i("JsonArray: " , String.valueOf(jsonArray.getJSONObject(0)));
         Log.i("length", String.valueOf(jsonArray.length()));
         for (int i=0; i<jsonArray.length(); i++){
-            Log.i("Count", fromJson(jsonArray.getJSONObject(i)).body);
-            tweets.add(fromJson(jsonArray.getJSONObject(i)));
+            Tweet newTweet = fromJson(jsonArray.getJSONObject(i));
+            //Log.i("Count", fromJson(jsonArray.getJSONObject(i)).body);
+            if (newTweet!=null) {
+                tweets.add(newTweet);
+            }
         }
         Log.i("Tweets", String.valueOf(tweets));
 

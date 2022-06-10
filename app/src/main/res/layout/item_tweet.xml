@@ -65,12 +65,14 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:textColor="#ffffff"
         android:id="@+id/createdAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#ffffff"
+        android:textSize="9sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -103,5 +105,30 @@
         android:textColor="#F8F5F5"
         app:layout_constraintStart_toEndOf="@+id/ibFavorite"
         app:layout_constraintTop_toTopOf="@+id/ibFavorite" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:text="username"
+        android:textColor="#FAF6F6"
+        app:layout_constraintEnd_toStartOf="@+id/createdAt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/userScreenName"
+        app:layout_constraintTop_toTopOf="@+id/userScreenName" />
+
+    <ImageButton
+        android:id="@+id/ibReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:src="@android:drawable/stat_notify_chat"
+        app:layout_constraintStart_toEndOf="@+id/favoriteCount"
+        app:layout_constraintTop_toBottomOf="@+id/mediaImage"
+        tools:srcCompat="@android:drawable/stat_notify_chat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

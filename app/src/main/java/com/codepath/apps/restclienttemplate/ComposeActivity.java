@@ -33,6 +33,33 @@ public class ComposeActivity extends AppCompatActivity {
     TwitterClient client;
 
 
+//    JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
+//        @Override
+//        public void onSuccess(int statusCode, Headers headers, JSON json) {
+//            Log.i(TAG, "Publish was successful!");
+//            try {
+//                //Tweet tweet = Tweet.fromJson(json.jsonObject);
+//
+//                //Log.i(TAG, "The published tweet is: " + tweet.body);
+//                //Intent intent = new Intent();
+//                // Pass relevant data back as a result
+//                //intent.putExtra("tweet", Parcels.wrap(tweet));
+//                // Activity finished ok, return the data
+//                setResult(RESULT_OK, intent); // set result code and bundle data for response
+//                finish(); // closes the activity, pass data to parent
+//
+//
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        @Override
+//        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+//            Log.e(TAG, "Publish not successful", throwable);
+//        }
+//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +89,32 @@ public class ComposeActivity extends AppCompatActivity {
                     return;
                 }
 
-                publishComposedTweet(tweetContent);
+                if (getIntent().hasExtra("tweet_to_reply_to")) {
+
+                    Tweet tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet_to_reply_to"));
+                    String idOfTweetToReplyTo = tweet.id;
+                    String screenname = tweet.user.screenName;
+                    client.replyToTweet(idOfTweetToReplyTo, "@" + screenname + " " + tweetContent, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            Intent intent = new Intent();
+                            // Pass relevant data back as a result
+                            intent.putExtra("tweet", Parcels.wrap(tweet));
+                            // Activity finished ok, return the data
+                            setResult(RESULT_OK, intent); // set result code and bundle data for response
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+                        }
+                    });
+                }else{
+                    publishComposedTweet(tweetContent);
+
+                }
+
 
 
 

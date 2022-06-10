@@ -55,6 +55,7 @@ public class TimelineActivity extends AppCompatActivity {
     ImageView profileLogo;
     ImageView twitter_icon;
     private EndlessRecyclerViewScrollListener scrollListener;
+    public static final int REQUEST_CODE = 20;
 
 
     @Override
@@ -65,7 +66,7 @@ public class TimelineActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.timeline_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
-//        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("Home");
         client = TwitterApp.getRestClient(this);
 

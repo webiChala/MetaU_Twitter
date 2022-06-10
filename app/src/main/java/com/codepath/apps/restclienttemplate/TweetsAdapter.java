@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -60,6 +61,8 @@ public class TweetsAdapter  extends RecyclerView.Adapter<TweetsAdapter.ViewHolde
         TextView createdAt;
         ImageButton ibFavorited;
         TextView tvFavoriteCount;
+        TextView username;
+        ImageButton ibReply;
         //ImageView timeline_icon;
 
         public ViewHolder(@NonNull View itemView) {
@@ -72,6 +75,9 @@ public class TweetsAdapter  extends RecyclerView.Adapter<TweetsAdapter.ViewHolde
             createdAt = itemView.findViewById(R.id.createdAt);
             ibFavorited = itemView.findViewById(R.id.ibFavorite);
             tvFavoriteCount = itemView.findViewById(R.id.favoriteCount);
+            username = itemView.findViewById(R.id.username);
+            ibReply = itemView.findViewById(R.id.ibReply);
+
             itemView.setOnClickListener(this);
             //timeline_icon = itemView.findViewById(R.id.timeline_icon);
         }
@@ -80,13 +86,27 @@ public class TweetsAdapter  extends RecyclerView.Adapter<TweetsAdapter.ViewHolde
             userTweet.setText(tweet.body);
             tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
             createdAt.setText(tweet.createdAt);
+            username.setText(tweet.user.name);
+
+            ibReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ComposeActivity.class);
+                    intent.putExtra("tweet_to_reply_to", Parcels.wrap(tweet));
+//                    intent.putExtra("should_reply_to_tweet", true);
+//                    intent.putExtra("id_of_tweet_to_reply_to", tweet.id);
+//                    intent.putExtra("screenname_of_tweet_to_reply_to", tweet.user.screenName);
+                    ((Activity) context).startActivityForResult(intent, Activity.RESULT_OK);
+                    //context.startActivity(intent);
+                }
+            });
             Glide.with(context).load(tweet.user.ProfileImageUrl).circleCrop().into(userPhoto);
 
             if (tweet.isfavorited){
-                Drawable newImage = context.getDrawable(android.R.drawable.btn_star_big_on);
+                Drawable newImage = context.getDrawable(R.drawable.ic_vector_heart);
                 ibFavorited.setImageDrawable(newImage);
             } else{
-                Drawable newImage = context.getDrawable(android.R.drawable.btn_star_big_off);
+                Drawable newImage = context.getDrawable(R.drawable.ic_vector_heart_stroke);
                 ibFavorited.setImageDrawable(newImage);
             }
 
@@ -111,7 +131,7 @@ public class TweetsAdapter  extends RecyclerView.Adapter<TweetsAdapter.ViewHolde
 
 
                         tweet.isfavorited = true;
-                        Drawable newImage = context.getDrawable(android.R.drawable.btn_star_big_on);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_vector_heart);
                         ibFavorited.setImageDrawable(newImage);
                         tweet.favoriteCount += 1;
                         tvFavoriteCount.setText(String.valueOf(tweet.favoriteCount));
@@ -140,7 +160,7 @@ public class TweetsAdapter  extends RecyclerView.Adapter<TweetsAdapter.ViewHolde
                             }
                         });
                         tweet.isfavorited = false;
-                        Drawable newImage = context.getDrawable(android.R.drawable.btn_star_big_off);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_vector_heart_stroke);
                         ibFavorited.setImageDrawable(newImage);
 
                         tweet.favoriteCount -= 1;

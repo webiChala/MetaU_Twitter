@@ -39,16 +39,14 @@
 
     <TextView
         android:id="@+id/userTweet"
-        android:layout_width="303dp"
-        android:layout_height="46dp"
-
+        android:layout_width="299dp"
+        android:layout_height="67dp"
+        android:paddingEnd="10dp"
         android:autoLink="web"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="#ffffff"
         android:minLines="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/userScreenName"
         app:layout_constraintTop_toBottomOf="@+id/userScreenName"
         app:layout_constraintVertical_bias="0.083"
